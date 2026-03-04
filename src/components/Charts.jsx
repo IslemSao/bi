@@ -24,7 +24,7 @@ export function ChartProductsByTurnover({ data }) {
           <XAxis type="number" tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
           <YAxis type="category" dataKey="produit" width={95} tick={{ fontSize: 11 }} />
           <Tooltip formatter={(v) => v?.toLocaleString('fr-FR')} />
-          <Bar dataKey="montantTtc" fill="#6366f1" name="CA TTC" radius={[0, 4, 4, 0]} />
+          <Bar dataKey="montantHt" fill="#6366f1" name="Chiffre d'affaires (HT)" radius={[0, 4, 4, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -41,7 +41,7 @@ export function ChartClientsByPurchases({ data }) {
           <XAxis dataKey="client" tick={{ fontSize: 10 }} angle={-25} textAnchor="end" height={70} />
           <YAxis tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
           <Tooltip formatter={(v) => v?.toLocaleString('fr-FR')} />
-          <Bar dataKey="montantTtc" fill="#8b5cf6" name="CA TTC" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="montantHt" fill="#8b5cf6" name="Chiffre d'affaires (HT)" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -73,13 +73,13 @@ export function ChartCategoryRevenue({ data }) {
         <PieChart>
           <Pie
             data={data}
-            dataKey="montantTtc"
+            dataKey="montantHt"
             nameKey="categorie"
             cx="50%"
             cy="50%"
             outerRadius={90}
-            label={({ categorie, montantTtc }) =>
-              `${categorie}: ${(montantTtc / 1000).toFixed(0)}k`
+            label={({ categorie, montantHt }) =>
+              `${categorie}: ${(montantHt / 1000).toFixed(0)}k`
             }
           >
             {data?.map((_, i) => (
@@ -104,7 +104,7 @@ export function ChartCAParWilaya({ data }) {
           <XAxis dataKey="wilaya" />
           <YAxis tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
           <Tooltip formatter={(v) => v?.toLocaleString('fr-FR')} />
-          <Bar dataKey="montantTtc" fill="#14b8a6" name="CA TTC" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="montantHt" fill="#14b8a6" name="Chiffre d'affaires (HT)" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -121,7 +121,7 @@ export function ChartCAParFormeJuridique({ data }) {
           <XAxis dataKey="formeJuridique" />
           <YAxis tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
           <Tooltip formatter={(v) => v?.toLocaleString('fr-FR')} />
-          <Bar dataKey="montantTtc" fill="#f97316" name="CA TTC" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="montantHt" fill="#f97316" name="Chiffre d'affaires (HT)" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -138,7 +138,7 @@ export function ChartClientsParWilaya({ data }) {
           <XAxis type="number" tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
           <YAxis type="category" dataKey="label" width={115} tick={{ fontSize: 11 }} />
           <Tooltip formatter={(v) => v?.toLocaleString('fr-FR')} />
-          <Bar dataKey="montantTtc" fill="#8b5cf6" name="CA TTC" radius={[0, 4, 4, 0]} />
+          <Bar dataKey="montantHt" fill="#8b5cf6" name="Chiffre d'affaires (HT)" radius={[0, 4, 4, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
