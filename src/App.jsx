@@ -10,7 +10,6 @@ import {
   ShoppingCart,
   UploadCloud,
   Plus,
-  Sparkles,
 } from 'lucide-react';
 import { defaultSalesData, processSalesData } from './data/salesData';
 import { defaultPurchasesData, processPurchasesData } from './data/purchasesData';
@@ -21,10 +20,7 @@ import { buildMarginJournal } from './data/marginJournal';
 import { CentralChart, AXIS_LABELS, MEASURE_LABELS } from './components/CentralChart';
 import { parseCsvToObjects } from './utils/csvParser';
 import { importSalesFromFlatRows, importPurchasesFromFlatRows } from './data/importUtils';
-import { validateWithAI, buildValidationPayload } from './utils/aiValidate';
 import './App.css';
-
-const HIDE_AI_VALIDATION = import.meta.env.VITE_HIDE_AI_VALIDATION === 'true' || import.meta.env.VITE_HIDE_AI_VALIDATION === '1';
 
 const DIMENSION_KEYS_VENTES = ['codeProduit', 'produit', 'categorie', 'client', 'formeJuridique', 'typeVente', 'wilaya', 'moisLabel', 'annee', 'dateCmd', 'numCmd'];
 const DIMENSION_KEYS_ACHATS = ['codeProduit', 'produit', 'categorie', 'fournisseur', 'formeJuridique', 'typeAchat', 'moisLabel', 'annee', 'dateCmd', 'numCmd'];
@@ -76,8 +72,6 @@ function App() {
   const [importErrorsAchats, setImportErrorsAchats] = useState([]);
   const [importSalesMode, setImportSalesMode] = useState('replace'); // 'replace' | 'expand'
   const [importPurchasesMode, setImportPurchasesMode] = useState('replace'); // 'replace' | 'expand'
-  const [aiValidationVentes, setAiValidationVentes] = useState({ loading: false, result: null });
-  const [aiValidationAchats, setAiValidationAchats] = useState({ loading: false, result: null });
   const [showAddVente, setShowAddVente] = useState(false);
   const [showAddAchat, setShowAddAchat] = useState(false);
   const today = new Date().toISOString().slice(0, 10);
@@ -329,28 +323,6 @@ function App() {
     setShowAddAchat(false);
   };
 
-  const handleAIValidateVentes = async () => {
-    const payload = buildValidationPayload(salesData, 'sales');
-    if (!payload) {
-      setAiValidationVentes({ loading: false, result: { ok: false, message: 'Aucune donnée à vérifier.' } });
-      return;
-    }
-    setAiValidationVentes({ loading: true, result: null });
-    const result = await validateWithAI(payload.type, payload.rowCount, payload.columns, payload.sampleRows);
-    setAiValidationVentes({ loading: false, result });
-  };
-
-  const handleAIValidateAchats = async () => {
-    const payload = buildValidationPayload(purchasesData, 'purchases');
-    if (!payload) {
-      setAiValidationAchats({ loading: false, result: { ok: false, message: 'Aucune donnée à vérifier.' } });
-      return;
-    }
-    setAiValidationAchats({ loading: true, result: null });
-    const result = await validateWithAI(payload.type, payload.rowCount, payload.columns, payload.sampleRows);
-    setAiValidationAchats({ loading: false, result });
-  };
-
   return (
     <div className="app">
       <header className="header">
@@ -542,26 +514,7 @@ function App() {
                       {importErrorsVentes.length} lignes invalides ignorées
                     </span>
                   )}
-                  {!HIDE_AI_VALIDATION && (
-                    <>
-                      <button
-                        type="button"
-                        className="btn btn-outline btn-ai"
-                        onClick={handleAIValidateVentes}
-                        disabled={!salesData?.length || aiValidationVentes.loading}
-                      >
-                        <Sparkles size={14} />
-                        {aiValidationVentes.loading ? 'Vérification…' : 'Vérifier avec l’IA'}
-                      </button>
-                    </>
-                  )}
                 </div>
-                {!HIDE_AI_VALIDATION && aiValidationVentes.result && (
-                  <div className={`ai-validation-result ${aiValidationVentes.result.ok ? 'ok' : 'error'}`}>
-                    <Sparkles size={16} />
-                    <p>{aiValidationVentes.result.message}</p>
-                  </div>
-                )}
                 {showAddVente && (
                   <form className="quick-add-form" onSubmit={handleAddVenteSubmit}>
                     <div className="quick-add-grid">
@@ -730,26 +683,7 @@ function App() {
                       {importErrorsAchats.length} lignes invalides ignorées
                     </span>
                   )}
-                  {!HIDE_AI_VALIDATION && (
-                    <>
-                      <button
-                        type="button"
-                        className="btn btn-outline btn-ai"
-                        onClick={handleAIValidateAchats}
-                        disabled={!purchasesData?.length || aiValidationAchats.loading}
-                      >
-                        <Sparkles size={14} />
-                        {aiValidationAchats.loading ? 'Vérification…' : 'Vérifier avec l’IA'}
-                      </button>
-                    </>
-                  )}
                 </div>
-                {!HIDE_AI_VALIDATION && aiValidationAchats.result && (
-                  <div className={`ai-validation-result ${aiValidationAchats.result.ok ? 'ok' : 'error'}`}>
-                    <Sparkles size={16} />
-                    <p>{aiValidationAchats.result.message}</p>
-                  </div>
-                )}
                 {showAddAchat && (
                   <form className="quick-add-form" onSubmit={handleAddAchatSubmit}>
                     <div className="quick-add-grid">

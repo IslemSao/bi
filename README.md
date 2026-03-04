@@ -4,30 +4,7 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 ## Deployment (Vercel)
 
-Deploy with **Vercel** (one project). The app works with or without the AI validation feature.
-
-**Without the AI agent (simplest):**
-
-- Deploy as usual (connect repo, build: `npm run build`, output: `dist`). Do **not** set `OPENROUTER_API_KEY`.
-- To hide the “Vérifier avec l’IA” button entirely, add in Vercel **Environment Variables**:
-  - `VITE_HIDE_AI_VALIDATION` = `true`
-- Everything else (ventes, achats, marge, import, add row) works normally.
-
-**With the AI agent:**
-
-1. In **Project → Settings → Environment Variables**, add:
-   - `OPENROUTER_API_KEY` = your [OpenRouter](https://openrouter.ai) API key.
-2. Do **not** set `VITE_HIDE_AI_VALIDATION` (or set it to `false`).
-
-The `/api` folder is deployed as serverless functions. The frontend calls `/api/validate-import` for AI checks; the key stays on the server.
-
-### AI validation in local dev
-
-To use **"Vérifier avec l'IA"** locally without `vercel dev`, add in `.env` at project root:
-
-- `VITE_OPENROUTER_API_KEY` = your OpenRouter key
-
-The app will call OpenRouter from the browser when the serverless API is unavailable. Do not commit `.env`.
+Connect the repo to Vercel; use build command `npm run build` and output directory `dist`. No environment variables required.
 
 Currently, two official plugins are available:
 

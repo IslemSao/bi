@@ -588,54 +588,6 @@
   color: #fca5a5;
 }
 
-.btn-ai {
-  color: #a78bfa;
-  border-color: rgba(167, 139, 250, 0.5);
-}
-.btn-ai:hover:not(:disabled) {
-  background: rgba(167, 139, 250, 0.15);
-  color: #c4b5fd;
-  border-color: #a78bfa;
-}
-.btn-ai:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.ai-validation-result {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  margin: 0.5rem 0 0.75rem;
-  padding: 0.65rem 0.9rem;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  line-height: 1.45;
-}
-.ai-validation-result svg {
-  flex-shrink: 0;
-  margin-top: 0.1rem;
-}
-.ai-validation-result p {
-  margin: 0;
-}
-.ai-validation-result.ok {
-  background: rgba(34, 197, 94, 0.12);
-  border: 1px solid rgba(34, 197, 94, 0.35);
-  color: #bbf7d0;
-}
-.ai-validation-result.ok svg {
-  color: #22c55e;
-}
-.ai-validation-result.error {
-  background: rgba(251, 191, 36, 0.12);
-  border: 1px solid rgba(251, 191, 36, 0.35);
-  color: #fef08a;
-}
-.ai-validation-result.error svg {
-  color: #eab308;
-}
-
 .quick-add-form {
   margin: 0.5rem 0 1rem;
   padding: 0.75rem 0.9rem;
