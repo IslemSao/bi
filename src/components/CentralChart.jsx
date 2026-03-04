@@ -20,7 +20,7 @@ const AXIS_LABELS = {
 };
 
 const MEASURE_LABELS = {
-  montantHt: 'Montant HT',
+  montantHt: "Chiffre d'affaires",
   montantTtc: 'Montant TTC',
   taxe: 'Taxe',
   qte: 'Quantité',

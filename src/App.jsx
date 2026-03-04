@@ -27,7 +27,7 @@ const DIMENSION_KEYS_ACHATS = ['codeProduit', 'produit', 'categorie', 'fournisse
 const DIMENSION_KEYS_MARGE = ['codeProduit', 'produit', 'type', 'partenaire', 'moisLabel', 'annee', 'date', 'numCmd'];
 
 const MEASURE_KEYS_SALES_PURCHASES = ['montantHt', 'montantTtc', 'taxe', 'qte', 'count'];
-const MEASURE_KEYS_MARGE = ['entree', 'sortie', 'montantHt', 'coutHt', 'margeHt', 'stockQte', 'stockValeur', 'count'];
+const MEASURE_KEYS_MARGE = ['entree', 'sortie', 'coutHt', 'margeHt', 'stockQte', 'count'];
 
 const defaultFiltersVentes = {
   produit: '', categorie: '', client: '', formeJuridique: '', typeVente: '', wilaya: '', mois: '', annee: '', dateMin: '', dateMax: '',
