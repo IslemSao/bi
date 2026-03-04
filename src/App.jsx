@@ -328,20 +328,6 @@ function App() {
       <header className="header">
         <h1>Business Intelligence – {isVentes ? 'Tableau 01 (Ventes)' : 'Tableau 02 (Achats)'}</h1>
         <div className="header-actions">
-          <div className="source-toggle">
-            <button
-              className={isVentes ? 'active' : ''}
-              onClick={() => setDataSource('ventes')}
-            >
-              <TrendingUp size={16} /> Ventes
-            </button>
-            <button
-              className={!isVentes ? 'active' : ''}
-              onClick={() => setDataSource('achats')}
-            >
-              <ShoppingCart size={16} /> Achats
-            </button>
-          </div>
           {lastSaved && <span className="saved-badge">Sauvegardé {lastSaved}</span>}
           <button className="btn btn-outline" onClick={handleResetData} title="Réinitialiser les données">
             <RefreshCw size={16} /> Réinitialiser
