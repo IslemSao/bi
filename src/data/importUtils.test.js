@@ -7,12 +7,15 @@ describe('importUtils number/date parsing', () => {
     expect(parseDecimal('500000.00')).toBeCloseTo(500000);
     expect(parseDecimal('500 000,00')).toBeCloseTo(500000);
     expect(parseDecimal('"1 234,5"')).toBeCloseTo(1234.5);
+    expect(parseDecimal('"384,000"')).toBeCloseTo(384000);
+    expect(parseDecimal('"4,037.50"')).toBeCloseTo(4037.5);
   });
 
   it('parseInteger handles various formats', () => {
     expect(parseInteger('10')).toBe(10);
     expect(parseInteger(' 1 000 ')).toBe(1000);
     expect(parseInteger('"25"')).toBe(25);
+    expect(parseInteger('"1,000"')).toBe(1000);
   });
 
   it('imports sales with date conversion and filters invalid lines', () => {
@@ -48,6 +51,38 @@ describe('importUtils number/date parsing', () => {
     expect(rows[0].dateCmd).toBe('2024-12-28');
     expect(rows[0].qte).toBe(4);
     expect(rows[0].montantHt).toBeCloseTo(500000);
+  });
+
+  it('imports rows with normalized french headers used by exported csv files', () => {
+    const sampleRows = [
+      {
+        'Num.CMD': 'VCD/0008',
+        'Date.CMD': '6/5/2025',
+        Client: 'SARL ABC',
+        Adresse: 'Constantine',
+        'Code Produit': 'COMPU.0020',
+        Produit: 'Laptop HP Probook G4',
+        Quantité: '3',
+        'Montant HT': '"384,000"',
+        Taxe: '"72,960"',
+        'Montant TTC': '"456,960"',
+      },
+    ];
+
+    const salesImport = importSalesFromFlatRows(sampleRows);
+    const purchasesImport = importPurchasesFromFlatRows(sampleRows);
+
+    expect(salesImport.errors).toHaveLength(0);
+    expect(salesImport.rows).toHaveLength(1);
+    expect(salesImport.rows[0].qte).toBe(3);
+    expect(salesImport.rows[0].montantHt).toBe(384000);
+    expect(salesImport.rows[0].dateCmd).toBe('2025-06-05');
+
+    expect(purchasesImport.errors).toHaveLength(0);
+    expect(purchasesImport.rows).toHaveLength(1);
+    expect(purchasesImport.rows[0].fournisseur).toBe('SARL ABC');
+    expect(purchasesImport.rows[0].qte).toBe(3);
+    expect(purchasesImport.rows[0].montantTtc).toBe(456960);
   });
 
   it('imports purchases and drops invalid quantity', () => {
@@ -146,4 +181,3 @@ describe('marginJournal PMP calculation', () => {
     expect(achat2.pmp).toBeCloseTo(101666.666, 0);
   });
 });
-

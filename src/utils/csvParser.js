@@ -48,7 +48,10 @@ export function parseCsvToObjects(text) {
 
   if (!rows.length) return [];
 
-  const header = rows[0].map((h) => String(h || '').trim());
+  const header = rows[0].map((h, idx) => {
+    const value = String(h || '').trim();
+    return idx === 0 ? value.replace(/^\uFEFF/, '') : value;
+  });
   const dataRows = rows.slice(1);
 
   return dataRows
@@ -62,4 +65,3 @@ export function parseCsvToObjects(text) {
       return obj;
     });
 }
-
